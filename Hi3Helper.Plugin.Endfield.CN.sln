@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hi3Helper.Plugin.Core", "Hi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hi3Helper.Plugin.Endfield.CN", "Hi3Helper.Plugin.Endfield.CN\Hi3Helper.Plugin.Endfield.CN.csproj", "{3BCC8F2A-68A3-4EE5-8FCE-D65A3E43945D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SevenZipExtractor", "SevenZipExtractor\SevenZipExtractor\SevenZipExtractor.csproj", "{2F94B840-190E-4E17-8603-B76F0124446B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,10 @@ Global
 		{3BCC8F2A-68A3-4EE5-8FCE-D65A3E43945D}.Debug|x64.Build.0 = Debug|Any CPU
 		{3BCC8F2A-68A3-4EE5-8FCE-D65A3E43945D}.Release|x64.ActiveCfg = Release|Any CPU
 		{3BCC8F2A-68A3-4EE5-8FCE-D65A3E43945D}.Release|x64.Build.0 = Release|Any CPU
+		{2F94B840-190E-4E17-8603-B76F0124446B}.Debug|x64.ActiveCfg = Debug|x64
+		{2F94B840-190E-4E17-8603-B76F0124446B}.Debug|x64.Build.0 = Debug|x64
+		{2F94B840-190E-4E17-8603-B76F0124446B}.Release|x64.ActiveCfg = Release|x64
+		{2F94B840-190E-4E17-8603-B76F0124446B}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

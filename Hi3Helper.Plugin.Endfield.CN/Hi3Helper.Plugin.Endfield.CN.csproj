@@ -25,10 +25,10 @@
 
     <ItemGroup>
         <ProjectReference Include="..\Hi3Helper.Plugin.Core\Hi3Helper.Plugin.Core.csproj"/>
+        <ProjectReference Include="..\SevenZipExtractor\SevenZipExtractor\SevenZipExtractor.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="SharpSevenZip" Version="2.0.35" />
         <PackageReference Include="System.IO.Hashing" Version="10.0.1"/>
     </ItemGroup>
 </Project>

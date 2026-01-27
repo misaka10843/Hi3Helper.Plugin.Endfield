@@ -15,7 +15,8 @@ using Hi3Helper.Plugin.Core.Management;
 using Hi3Helper.Plugin.Endfield.CN.Management.Api;
 using Hi3Helper.Plugin.Endfield.CN.Utils;
 using Microsoft.Extensions.Logging;
-using SharpSevenZip;
+using SevenZipExtractor;
+using SevenZipExtractor.Event;
 
 namespace Hi3Helper.Plugin.Endfield.CN.Management;
 
@@ -135,13 +136,13 @@ internal partial class EndfieldGameInstaller
 
             progressStateDelegate?.Invoke(InstallProgressState.Install);
 
-            await ExtractPackagesAsync(downloadDir, installPath, token, (extracted, total) =>
+            await ExtractPackagesAsync(downloadDir, installPath, token, (extractedBytes, totalBytes) =>
             {
-                progress.DownloadedBytes = extracted;
-                progress.TotalBytesToDownload = total;
+                progress.DownloadedBytes = extractedBytes;
+                progress.TotalBytesToDownload = totalBytes;
                 Report(InstallProgressState.Install);
             });
-            // Directory.Delete(downloadDir, true); // 删除下载包
+            // try { Directory.Delete(downloadDir, true); } catch { } // 删除下载包
             progressStateDelegate?.Invoke(InstallProgressState.Completed);
         }
 
@@ -224,50 +225,57 @@ internal partial class EndfieldGameInstaller
         private async Task ExtractPackagesAsync(string sourceDir, string destDir, CancellationToken token,
             Action<long, long>? progressCallback)
         {
-            SharedStatic.InstanceLogger.LogInformation($"[EndfieldInstaller] 开始解压流程: {sourceDir} -> {destDir}");
+            SharedStatic.InstanceLogger.LogInformation($"[EndfieldInstaller] 准备解压 (虚拟合并流): {sourceDir} -> {destDir}");
 
-            var archives = Directory.GetFiles(sourceDir);
-            var firstVolume = archives.FirstOrDefault(f => f.EndsWith(".zip.001", StringComparison.OrdinalIgnoreCase)
-                                                           || f.EndsWith(".001", StringComparison.OrdinalIgnoreCase));
+            var partFiles = Directory.GetFiles(sourceDir)
+                .Where(f => f.EndsWith(".zip.001", StringComparison.OrdinalIgnoreCase) ||
+                            (Path.GetExtension(f).Length == 4 && char.IsDigit(Path.GetExtension(f)[1]) &&
+                             f.Contains(".zip.")))
+                .OrderBy(f => f, StringComparer.OrdinalIgnoreCase)
+                .ToList();
 
-            if (firstVolume == null)
+            if (partFiles.Count == 0)
             {
-                firstVolume = archives.FirstOrDefault(f => f.EndsWith(".zip", StringComparison.OrdinalIgnoreCase)
-                                                           || f.EndsWith(".7z", StringComparison.OrdinalIgnoreCase));
+                var singleZip = Directory.GetFiles(sourceDir, "*.zip").FirstOrDefault();
+                if (singleZip != null) partFiles.Add(singleZip);
             }
 
-            if (firstVolume == null)
+            if (partFiles.Count == 0)
             {
-                SharedStatic.InstanceLogger.LogError("[EndfieldInstaller] 未在下载目录找到有效的压缩包文件！");
+                SharedStatic.InstanceLogger.LogError("[EndfieldInstaller] 未找到任何压缩包文件！");
                 throw new FileNotFoundException("No archive found in Downloads folder");
             }
 
-            SharedStatic.InstanceLogger.LogInformation($"[EndfieldInstaller] 发现主压缩包: {Path.GetFileName(firstVolume)}");
+            SharedStatic.InstanceLogger.LogInformation($"[EndfieldInstaller] 找到 {partFiles.Count} 个分卷文件。");
 
-            await Task.Run(() =>
+            await Task.Run(async () =>
             {
                 try
                 {
-                    using (var extractor = new SharpSevenZipExtractor(firstVolume))
+                    using var multiStream = new MultiVolumeStream(partFiles);
+                    using var archiveFile = new ArchiveFile(multiStream);
+
+                    long totalSize = archiveFile.Entries.Sum(x => (long)x.Size);
+                    long currentRead = 0;
+
+                    void ZipProgressAdapter(object? sender, ExtractProgressProp e)
                     {
-                        long totalSize = 0;
-                        foreach (var entry in extractor.ArchiveFileData)
-                        {
-                            if (!entry.IsDirectory) totalSize += (long)entry.Size;
-                        }
+                        if (token.IsCancellationRequested) return;
 
-                        extractor.Extracting += (sender, args) =>
-                        {
-                            if (token.IsCancellationRequested)
-                            {
-                                throw new OperationCanceledException();
-                            }
+                        Interlocked.Add(ref currentRead, (long)e.Read);
+                        progressCallback?.Invoke(Math.Min(currentRead, totalSize), totalSize);
+                    }
 
-                            long downloaded = (long)(totalSize * (args.PercentDone / 100.0));
-                            progressCallback?.Invoke(downloaded, totalSize);
-                        };
-
-                        extractor.ExtractArchive(destDir);
+                    archiveFile.ExtractProgress += ZipProgressAdapter;
+                    try
+                    {
+                        SharedStatic.InstanceLogger.LogInformation("[EndfieldInstaller] 开始提取...");
+                        await archiveFile.ExtractAsync(entry => Path.Combine(destDir, entry.FileName), true, 1 << 20,
+                            token);
+                    }
+                    finally
+                    {
+                        archiveFile.ExtractProgress -= ZipProgressAdapter;
                     }
 
                     SharedStatic.InstanceLogger.LogInformation("[EndfieldInstaller] 解压完成！");
