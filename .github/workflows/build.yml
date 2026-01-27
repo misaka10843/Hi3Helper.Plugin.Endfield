@@ -1,0 +1,71 @@
+name: Build and Publish Plugin
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+    inputs:
+      publish_profile:
+        description: 'Publish profile to use'
+        required: true
+        type: choice
+        options:
+        - ReleaseNoReflectionPublish-O1
+        - ReleaseNoReflectionPublish-O2
+        - ReleasePublish-O1
+        - ReleasePublish-O2
+        - DebugPublish
+        - DebugNoReflectionPublish
+        default: ReleaseNoReflectionPublish-O1
+
+permissions:
+  id-token: write
+  contents: read
+  attestations: write
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v6
+      with:
+        submodules: true
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v5
+      with:
+        dotnet-version: '10.0.x'
+
+    - name: Set publish profile
+      shell: pwsh
+      run: |
+        if ($env:GITHUB_EVENT_NAME -eq 'workflow_dispatch') {
+          $profile = '${{ inputs.publish_profile }}'
+        } else {
+          $profile = 'ReleaseNoReflectionPublish-O1'
+        }
+        echo "PUBLISH_PROFILE=$profile" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+
+    - name: Restore dependencies
+      run: dotnet restore Hi3Helper.Plugin.Endfield.CN.sln
+
+    - name: Build solution
+      run: dotnet build --configuration Release Hi3Helper.Plugin.Endfield.CN.sln --no-restore
+
+    - name: Publish with selected profile
+      run: dotnet publish Hi3Helper.Plugin.Endfield.CN/Hi3Helper.Plugin.Endfield.CN.csproj --configuration Release --runtime win-x64 /p:PublishProfile=$PUBLISH_PROFILE -o ./publish
+
+    - name: Generate build provenance
+      uses: actions/attest-build-provenance@v1
+      with:
+        subject-path: './publish/**'
+
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v6
+      with:
+        name: plugin-build
+        path: ./publish/

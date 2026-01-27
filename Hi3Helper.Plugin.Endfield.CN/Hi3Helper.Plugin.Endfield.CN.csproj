@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>disable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <Platforms>x64</Platforms>
+        <InvariantGlobalization>true</InvariantGlobalization>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <DebugType>embedded</DebugType>
+        <Deterministic>true</Deterministic>
+        <LangVersion>preview</LangVersion>
+        <AssemblyName>EndfieldCN</AssemblyName>
+        <ProductName>明日方舟：终末地插件</ProductName>
+        <Product>Collapse</Product>
+        <Description>这是明日方舟：终末地中国官方服务器插件</Description>
+        <AssemblyTitle>明日方舟：终末地插件</AssemblyTitle>
+        <Company>Misaka10843</Company>
+        <Authors>$(Company).</Authors>
+        <Copyright>Copyright 2022-2025 $(Company)</Copyright>
+        <Version>0.0.1</Version>
+        <ApplicationIcon>icon.ico</ApplicationIcon>
+        <Configurations>Debug;Release</Configurations>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Hi3Helper.Plugin.Core\Hi3Helper.Plugin.Core.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="System.IO.Hashing" Version="10.0.1"/>
+    </ItemGroup>
+</Project>

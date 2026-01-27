@@ -1,0 +1,41 @@
+version: "1.0"
+ide: QDNET
+#linter: jetbrains/qodana-cdnet
+bootstrap: git submodule sync --recursive && git -c protocol.version=2 submodule update --init --force --recursive && .\CompileAOTAndShip.bat 4
+dotnet:
+  solution: Hi3Helper.Plugin.HBR.sln
+include:
+  - name: CheckDependencyLicenses
+  - name: VulnerableLibrariesGlobal
+  - name: RiderSecurityErrorsInspection
+exclude:
+  - name: All
+    paths:
+      - Hi3Helper.Plugin.Core
+  - name: CheckNamespace
+  - name: UnusedParameter.Local
+  - name: UnusedMember.Local
+  - name: RedundantArgumentDefaultValue
+  - name: RedundantDefaultMemberInitializer
+  - name: Xaml.BindingWithContextNotResolved
+  - name: Xaml.ConstructorWarning
+  - name: Xaml.InvalidResourceType
+  - name: Xaml.StaticResourceNotResolved
+  - name: RedundantExtendsListEntry
+  - name: PartialTypeWithSinglePart
+  - name: InvalidXmlDocComment
+licenseRules:
+  - keys:
+      - "MIT"
+    allowed:
+    # WinAppSDK
+      - "MS-DXSDK-D3DX-9.29.952.3"
+    # .NET
+      - "MS-ASP-NET-WEB-OPTIMIZATION"
+      - "MS-NET-LIBRARY-2019-06"
+    # Windows SDK
+      - "PROPRIETARY-LICENSE"
+    # Protobuf, duh
+      - "PROTOBUF"
+    # System.CommandLine NuGet for some reason
+      - "None"

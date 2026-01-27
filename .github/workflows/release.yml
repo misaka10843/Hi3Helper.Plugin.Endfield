@@ -1,0 +1,88 @@
+name: Release Plugin
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Release version'
+        required: true
+        type: string
+      publish_profile:
+        description: 'Publish profile to use'
+        required: true
+        type: choice
+        options:
+        - ReleaseNoReflectionPublish-O1
+        - ReleaseNoReflectionPublish-O2
+        - ReleasePublish-O1
+        - ReleasePublish-O2
+        - DebugPublish
+        - DebugNoReflectionPublish
+        default: ReleaseNoReflectionPublish-O1
+
+permissions:
+  id-token: write
+  contents: write
+  attestations: write
+  pull-requests: write
+
+jobs:
+  release:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v6
+      with:
+        fetch-depth: 0
+        submodules: true
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v5
+      with:
+        dotnet-version: '10.0.x'
+
+    - name: Restore dependencies
+      run: dotnet restore Hi3Helper.Plugin.Endfield.CN.sln
+
+    - name: Build solution
+      run: dotnet build --configuration Release Hi3Helper.Plugin.Endfield.CN.sln --no-restore
+
+    - name: Publish with selected profile
+      run: dotnet publish Hi3Helper.Plugin.Endfield.CN/Hi3Helper.Plugin.Endfield.CN.csproj --configuration Release --runtime win-x64 /p:PublishProfile=${{ inputs.publish_profile }} -o ./publish
+
+    - name: Generate build provenance
+      uses: actions/attest-build-provenance@v3
+      with:
+        subject-path: './publish/**'
+
+    # --- STEP 1: Zip Clean Files (Before Indexer runs) ---
+    # We save this OUTSIDE the publish folder so Indexer doesn't process it.
+    - name: Create Clean Release Zip
+      run: Compress-Archive -Path ./publish/* -DestinationPath ./Endfield_v${{ inputs.version }}.zip
+
+    # --- STEP 2: Indexer (Modifies publish folder) ---
+    # This generates the .br files and the Launcher-specific zip inside ./publish
+    - name: Run Indexer
+      run: .\Indexer.exe .\publish
+
+    # --- STEP 4: Generate Changelog ---
+    - name: Generate Changelog
+      uses: orhun/git-cliff-action@v4
+      with:
+        config: cliff.toml
+        # (Implicitly grabs all "unreleased" changes since v0.4.0)
+        args: --unreleased --tag v${{ inputs.version }} --strip header
+      id: git-cliff
+
+    # --- STEP 5: Create GitHub Release ---
+    - name: Create Release
+      uses: softprops/action-gh-release@v2
+      with:
+        tag_name: v${{ inputs.version }}
+        name: Release v${{ inputs.version }}
+        body: ${{ steps.git-cliff.outputs.content }}
+        # Upload zip with correct manifest from step 2
+        files: ./publish/*.zip
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

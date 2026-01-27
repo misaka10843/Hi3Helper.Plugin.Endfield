@@ -1,0 +1,74 @@
+﻿using System;
+using System.Runtime.InteropServices.Marshalling;
+using Hi3Helper.Plugin.Core;
+using Hi3Helper.Plugin.Core.Management.PresetConfig;
+using Hi3Helper.Plugin.Core.Update;
+using Hi3Helper.Plugin.Core.Utility;
+using Hi3Helper.Plugin.Endfield.CN.Management.PresetConfig;
+using Hi3Helper.Plugin.Endfield.CN.Utils;
+using Microsoft.Extensions.Logging;
+
+namespace Hi3Helper.Plugin.Endfield.CN;
+
+[GeneratedComClass]
+public partial class EndfieldPlugin : PluginBase
+{
+    private static readonly IPluginPresetConfig[] PresetConfigInstances =
+    [
+        new EndfieldCnPresetConfig()
+    ];
+
+    private static DateTime _pluginCreationDate = new(2026, 01, 27, 00, 00, 0, DateTimeKind.Utc);
+
+    public override void GetPluginName(out string result)
+    {
+        result = "终末地插件";
+    }
+
+    public override void GetPluginDescription(out string result)
+    {
+        result = "明日方舟：终末地 (CN) 游戏管理插件";
+    }
+
+    public override void GetPluginAuthor(out string result)
+    {
+        result = "misaka10843";
+    }
+
+    public override unsafe void GetPluginCreationDate(out DateTime* result)
+    {
+        result = _pluginCreationDate.AsPointer();
+    }
+
+    public override void GetPresetConfigCount(out int count)
+    {
+        count = PresetConfigInstances.Length;
+    }
+
+    public override void GetPresetConfig(int index, out IPluginPresetConfig presetConfig)
+    {
+        SharedStatic.InstanceLogger.LogInformation("[Endfield]开始运行");
+        if (index < 0 || index >= PresetConfigInstances.Length)
+        {
+            presetConfig = null!;
+            return;
+        }
+
+        presetConfig = PresetConfigInstances[index];
+    }
+
+    public override void GetPluginSelfUpdater(out IPluginSelfUpdate selfUpdate)
+    {
+        selfUpdate = null!;
+    }
+
+    public override void GetPluginAppIconUrl(out string result)
+    {
+        result = Convert.ToBase64String(EndfieldImageData.AppIcon);
+    }
+
+    public override void GetNotificationPosterUrl(out string result)
+    {
+        result = Convert.ToBase64String(EndfieldImageData.Poster);
+    }
+}
