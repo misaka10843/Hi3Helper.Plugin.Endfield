@@ -18,19 +18,27 @@ namespace Hi3Helper.Plugin.Endfield.CN.Management;
 [GeneratedComClass]
 internal partial class EndfieldGameManager : GameManagerBase
 {
-    private const string ExApiUrl = "https://launcher.hypergryph.com/api/proxy/batch_proxy";
-    private const string ExWebApiUrl = "https://launcher.hypergryph.com/api/proxy/web/batch_proxy";
-
-    private const string ExAppCode = "6LL0KJuqHBVz33WK";
-    private const string ExLauncherAppCode = "abYeZZ16BPluCFyT";
-    private const string ExChannel = "1";
-    private const string ExSubChannel = "1";
+    private readonly string _apiUrl;
+    private readonly string _webApiUrl;
+    private readonly string _appCode;
+    private readonly string _launcherAppCode;
+    private readonly string _channel;
+    private readonly string _subChannel;
+    private readonly string _seq;
 
     private EndfieldGetLatestGameRsp? _latestGameInfo;
 
-    internal EndfieldGameManager(string gameExecutableNameByPreset, string apiResponseUrl)
+    internal EndfieldGameManager(string gameExecutableNameByPreset, string apiUrl, string webApiUrl, string appCode,
+        string launcherAppCode, string channel, string subChannel, string seq)
     {
         CurrentGameExecutableByPreset = gameExecutableNameByPreset;
+        _apiUrl = apiUrl;
+        _webApiUrl = webApiUrl;
+        _appCode = appCode;
+        _launcherAppCode = launcherAppCode;
+        _channel = channel;
+        _subChannel = subChannel;
+        _seq = seq;
     }
 
     internal string? GameResourceBaseUrl { get; set; }
@@ -116,17 +124,18 @@ internal partial class EndfieldGameManager : GameManagerBase
 
         var requestBody = new EndfieldBatchRequest
         {
+            Seq = _seq,
             ProxyReqs = new List<EndfieldProxyRequest>
             {
-                new()
+                new EndfieldProxyRequest
                 {
                     Kind = "get_latest_game",
                     GetLatestGameReq = new EndfieldGetLatestGameReq
                     {
-                        AppCode = ExAppCode,
-                        LauncherAppCode = ExLauncherAppCode,
-                        Channel = ExChannel,
-                        SubChannel = ExSubChannel,
+                        AppCode = _appCode,
+                        LauncherAppCode = _launcherAppCode,
+                        Channel = _channel,
+                        SubChannel = _subChannel,
                         Version = requestVersion
                     }
                 }
@@ -135,7 +144,7 @@ internal partial class EndfieldGameManager : GameManagerBase
 
         try
         {
-            using var response = await ApiResponseHttpClient!.PostAsJsonAsync(ExApiUrl, requestBody,
+            using var response = await ApiResponseHttpClient!.PostAsJsonAsync(_apiUrl, requestBody,
                 EndfieldApiContext.Default.EndfieldBatchRequest, token);
             response.EnsureSuccessStatusCode();
 
@@ -173,16 +182,17 @@ internal partial class EndfieldGameManager : GameManagerBase
     {
         var requestBody = new EndfieldBatchRequest
         {
+            Seq = _seq,
             ProxyReqs = new List<EndfieldProxyRequest>
             {
-                new()
+                new EndfieldProxyRequest
                 {
                     Kind = "get_main_bg_image",
                     GetMainBgImageReq = new EndfieldCommonReq
                     {
-                        AppCode = ExAppCode,
-                        Channel = ExChannel,
-                        SubChannel = ExSubChannel
+                        AppCode = _appCode,
+                        Channel = _channel,
+                        SubChannel = _subChannel
                     }
                 }
             }
@@ -190,7 +200,7 @@ internal partial class EndfieldGameManager : GameManagerBase
 
         try
         {
-            using var response = await ApiResponseHttpClient!.PostAsJsonAsync(ExWebApiUrl, requestBody,
+            using var response = await ApiResponseHttpClient!.PostAsJsonAsync(_webApiUrl, requestBody,
                 EndfieldApiContext.Default.EndfieldBatchRequest, token);
             response.EnsureSuccessStatusCode();
 

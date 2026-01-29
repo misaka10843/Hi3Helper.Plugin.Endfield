@@ -16,9 +16,13 @@ public partial class EndfieldCnPresetConfig : PluginPresetConfigBase
 {
     private const string ExEcutableName = "Endfield.exe";
 
+    private const string ExApiUrl = "https://launcher.hypergryph.com/api/proxy/batch_proxy";
+    private const string ExWebApiUrl = "https://launcher.hypergryph.com/api/proxy/web/batch_proxy";
     private const string ExAppCode = "6LL0KJuqHBVz33WK";
+    private const string ExLauncherAppCode = "abYeZZ16BPluCFyT";
     private const string ExChannel = "1";
     private const string ExSubChannel = "1";
+    private const string ExSeq = "5";
 
     [field: AllowNull] [field: MaybeNull] public override string GameName => field ??= "明日方舟：终末地";
     [field: AllowNull] [field: MaybeNull] public override string GameExecutableName => field ??= ExEcutableName;
@@ -65,19 +69,19 @@ public partial class EndfieldCnPresetConfig : PluginPresetConfigBase
 
     public override ILauncherApiMedia? LauncherApiMedia
     {
-        get => field ??= new EndfieldLauncherApiMedia(ExAppCode, ExChannel, ExSubChannel);
+        get => field ??= new EndfieldLauncherApiMedia(ExWebApiUrl, ExAppCode, ExChannel, ExSubChannel, ExSeq);
         set;
     }
 
     public override ILauncherApiNews? LauncherApiNews
     {
-        get => field ??= new EndfieldLauncherApiNews(ExAppCode, ExChannel, ExSubChannel);
+        get => field ??= new EndfieldLauncherApiNews(ExWebApiUrl, ExAppCode, ExChannel, ExSubChannel, ExSeq); 
         set;
     }
 
     public override IGameManager? GameManager
     {
-        get => field ??= new EndfieldGameManager(ExEcutableName, "");
+        get => field ??= new EndfieldGameManager(ExEcutableName, ExApiUrl, ExWebApiUrl, ExAppCode, ExLauncherAppCode, ExChannel, ExSubChannel, ExSeq);
         set;
     }
 

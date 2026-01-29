@@ -18,18 +18,21 @@ namespace Hi3Helper.Plugin.Endfield.CN.Management.Api;
 [GeneratedComClass]
 public partial class EndfieldLauncherApiMedia : LauncherApiMediaBase
 {
-    private const string WebApiUrl = "https://launcher.hypergryph.com/api/proxy/web/batch_proxy";
+    private readonly string _webApiUrl;
     private readonly string _appCode;
     private readonly string _channel;
     private readonly string _subChannel;
+    private readonly string _seq;
 
     private EndfieldGetMainBgImageRsp? _bgResponse;
 
-    public EndfieldLauncherApiMedia(string appCode, string channel, string subChannel)
+    public EndfieldLauncherApiMedia(string webApiUrl, string appCode, string channel, string subChannel, string seq)
     {
+        _webApiUrl = webApiUrl;
         _appCode = appCode;
         _channel = channel;
         _subChannel = subChannel;
+        _seq = seq;
     }
 
     [field: AllowNull] [field: MaybeNull] protected override HttpClient ApiResponseHttpClient { get; set; } = new();
@@ -47,12 +50,13 @@ public partial class EndfieldLauncherApiMedia : LauncherApiMediaBase
         set;
     }
 
-    protected override string ApiResponseBaseUrl => WebApiUrl;
+    protected override string ApiResponseBaseUrl => _webApiUrl;
 
     protected override async Task<int> InitAsync(CancellationToken token)
     {
         var requestBody = new EndfieldBatchRequest
         {
+            Seq = _seq,
             ProxyReqs = new[]
             {
                 new EndfieldProxyRequest { Kind = "get_main_bg_image", GetMainBgImageReq = CreateCommonReq() }
@@ -61,7 +65,7 @@ public partial class EndfieldLauncherApiMedia : LauncherApiMediaBase
 
         try
         {
-            using var response = await ApiResponseHttpClient.PostAsJsonAsync(WebApiUrl, requestBody,
+            using var response = await ApiResponseHttpClient.PostAsJsonAsync(_webApiUrl, requestBody,
                 EndfieldApiContext.Default.EndfieldBatchRequest, token);
             response.EnsureSuccessStatusCode();
 

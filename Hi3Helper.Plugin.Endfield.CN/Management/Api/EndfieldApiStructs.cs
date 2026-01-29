@@ -8,7 +8,7 @@ namespace Hi3Helper.Plugin.Endfield.CN.Management.Api;
 // ==========================================
 public class EndfieldBatchRequest
 {
-    [JsonPropertyName("seq")] public string Seq { get; set; } = "5";
+    [JsonPropertyName("seq")] public string Seq { get; set; }
 
     [JsonPropertyName("proxy_reqs")] public List<EndfieldProxyRequest> ProxyReqs { get; set; } = new();
 }

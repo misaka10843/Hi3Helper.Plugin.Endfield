@@ -20,19 +20,22 @@ namespace Hi3Helper.Plugin.Endfield.CN.Management.Api;
 [GeneratedComClass]
 public partial class EndfieldLauncherApiNews : LauncherApiNewsBase
 {
-    private const string ExWebApiUrl = "https://launcher.hypergryph.com/api/proxy/web/batch_proxy";
+    private readonly string _webApiUrl;
     private readonly string _appCode;
     private readonly string _channel;
     private readonly string _subChannel;
-    private EndfieldGetBannerRsp? _bannerResponse;
+    private readonly string _seq;
 
+    private EndfieldGetBannerRsp? _bannerResponse;
     private EndfieldGetAnnouncementRsp? _newsResponse;
 
-    public EndfieldLauncherApiNews(string appCode, string channel, string subChannel)
+    public EndfieldLauncherApiNews(string webApiUrl, string appCode, string channel, string subChannel, string seq)
     {
+        _webApiUrl = webApiUrl;
         _appCode = appCode;
         _channel = channel;
         _subChannel = subChannel;
+        _seq = seq;
     }
 
     [field: AllowNull] [field: MaybeNull] protected override HttpClient ApiResponseHttpClient { get; set; } = new();
@@ -50,12 +53,13 @@ public partial class EndfieldLauncherApiNews : LauncherApiNewsBase
         set;
     }
 
-    protected override string ApiResponseBaseUrl => ExWebApiUrl;
+    protected override string ApiResponseBaseUrl => _webApiUrl;
 
     protected override async Task<int> InitAsync(CancellationToken token)
     {
         var requestBody = new EndfieldBatchRequest
         {
+            Seq = _seq,
             ProxyReqs = new[]
             {
                 new EndfieldProxyRequest { Kind = "get_announcement", GetAnnouncementReq = CreateCommonReq() },
@@ -65,7 +69,7 @@ public partial class EndfieldLauncherApiNews : LauncherApiNewsBase
 
         try
         {
-            using var response = await ApiResponseHttpClient.PostAsJsonAsync(ExWebApiUrl, requestBody,
+            using var response = await ApiResponseHttpClient.PostAsJsonAsync(_webApiUrl, requestBody,
                 EndfieldApiContext.Default.EndfieldBatchRequest, token);
             response.EnsureSuccessStatusCode();
 
