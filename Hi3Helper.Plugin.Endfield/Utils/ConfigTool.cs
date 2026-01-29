@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Text;
 
-namespace Hi3Helper.Plugin.Endfield.CN.Utils;
+namespace Hi3Helper.Plugin.Endfield.Utils;
 
 public static class ConfigTool
 {

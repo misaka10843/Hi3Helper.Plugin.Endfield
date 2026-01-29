@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Hi3Helper.Plugin.Endfield.CN.Management.Api;
+namespace Hi3Helper.Plugin.Endfield.Management.Api;
 
 [JsonSourceGenerationOptions(
     WriteIndented = false,

@@ -4,11 +4,11 @@ using Hi3Helper.Plugin.Core;
 using Hi3Helper.Plugin.Core.Management.PresetConfig;
 using Hi3Helper.Plugin.Core.Update;
 using Hi3Helper.Plugin.Core.Utility;
-using Hi3Helper.Plugin.Endfield.CN.Management.PresetConfig;
-using Hi3Helper.Plugin.Endfield.CN.Utils;
+using Hi3Helper.Plugin.Endfield.Management.PresetConfig;
+using Hi3Helper.Plugin.Endfield.Utils;
 using Microsoft.Extensions.Logging;
 
-namespace Hi3Helper.Plugin.Endfield.CN;
+namespace Hi3Helper.Plugin.Endfield;
 
 [GeneratedComClass]
 public partial class EndfieldPlugin : PluginBase
@@ -23,12 +23,12 @@ public partial class EndfieldPlugin : PluginBase
 
     public override void GetPluginName(out string result)
     {
-        result = "终末地插件";
+        result = "Arknights: Endfield Plugin";
     }
 
     public override void GetPluginDescription(out string result)
     {
-        result = "明日方舟：终末地 (CN) 游戏管理插件";
+        result = "A plugin for Arknights: Endfield in Collapse Launcher";
     }
 
     public override void GetPluginAuthor(out string result)

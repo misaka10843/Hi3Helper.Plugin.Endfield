@@ -5,7 +5,7 @@ VisualStudioVersion = 17.13.35931.197
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hi3Helper.Plugin.Core", "Hi3Helper.Plugin.Core\Hi3Helper.Plugin.Core.csproj", "{6D56B964-1509-482F-4589-C780CDE5C703}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hi3Helper.Plugin.Endfield.CN", "Hi3Helper.Plugin.Endfield.CN\Hi3Helper.Plugin.Endfield.CN.csproj", "{3BCC8F2A-68A3-4EE5-8FCE-D65A3E43945D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hi3Helper.Plugin.Endfield", "Hi3Helper.Plugin.Endfield\Hi3Helper.Plugin.Endfield.csproj", "{3BCC8F2A-68A3-4EE5-8FCE-D65A3E43945D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SevenZipExtractor", "SevenZipExtractor\SevenZipExtractor\SevenZipExtractor.csproj", "{2F94B840-190E-4E17-8603-B76F0124446B}"
 EndProject

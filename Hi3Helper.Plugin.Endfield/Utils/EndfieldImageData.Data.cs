@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Hi3Helper.Plugin.Endfield.CN.Utils;
+namespace Hi3Helper.Plugin.Endfield.Utils;
 
 public static class EndfieldImageData
 {

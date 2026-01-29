@@ -11,13 +11,13 @@ using System.Threading;
 using System.Threading.Tasks;
 using Hi3Helper.Plugin.Core;
 using Hi3Helper.Plugin.Core.Management;
-using Hi3Helper.Plugin.Endfield.CN.Management.Api;
-using Hi3Helper.Plugin.Endfield.CN.Utils;
+using Hi3Helper.Plugin.Endfield.Management.Api;
+using Hi3Helper.Plugin.Endfield.Utils;
 using Microsoft.Extensions.Logging;
 using SevenZipExtractor;
 using SevenZipExtractor.Event;
 
-namespace Hi3Helper.Plugin.Endfield.CN.Management;
+namespace Hi3Helper.Plugin.Endfield.Management;
 
 internal partial class EndfieldGameInstaller
 {

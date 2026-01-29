@@ -7,10 +7,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using Hi3Helper.Plugin.Core.Management.PresetConfig;
 using Hi3Helper.Plugin.Core.Utility;
-using Hi3Helper.Plugin.Endfield.CN.Management;
+using Hi3Helper.Plugin.Endfield.Management;
 using Microsoft.Extensions.Logging;
 
-namespace Hi3Helper.Plugin.Endfield.CN;
+namespace Hi3Helper.Plugin.Endfield;
 
 public partial class Exports
 {

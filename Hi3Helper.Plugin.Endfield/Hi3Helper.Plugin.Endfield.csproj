@@ -10,15 +10,15 @@
         <DebugType>embedded</DebugType>
         <Deterministic>true</Deterministic>
         <LangVersion>preview</LangVersion>
-        <AssemblyName>EndfieldCN</AssemblyName>
-        <ProductName>明日方舟：终末地插件</ProductName>
+        <AssemblyName>Endfield</AssemblyName>
+        <ProductName>Arknights: Endfield Plugin</ProductName>
         <Product>Collapse</Product>
-        <Description>这是明日方舟：终末地中国官方服务器插件</Description>
-        <AssemblyTitle>明日方舟：终末地插件</AssemblyTitle>
+        <Description>This library is a plugin for adding support for the game "Wuthering Waves" into Collapse Launcher</Description>
+        <AssemblyTitle>Arknights: Endfield Plugin</AssemblyTitle>
         <Company>Misaka10843</Company>
         <Authors>$(Company).</Authors>
-        <Copyright>Copyright 2022-2025 $(Company)</Copyright>
-        <Version>0.0.1</Version>
+        <Copyright>Copyright 2026 $(Company)</Copyright>
+        <Version>0.1.0</Version>
         <ApplicationIcon>icon.ico</ApplicationIcon>
         <Configurations>Debug;Release</Configurations>
     </PropertyGroup>

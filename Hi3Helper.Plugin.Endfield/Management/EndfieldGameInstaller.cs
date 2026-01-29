@@ -10,7 +10,7 @@ using Hi3Helper.Plugin.Core.Management;
 using Hi3Helper.Plugin.Core.Utility;
 using Microsoft.Extensions.Logging;
 
-namespace Hi3Helper.Plugin.Endfield.CN.Management;
+namespace Hi3Helper.Plugin.Endfield.Management;
 
 [GeneratedComClass]
 internal partial class EndfieldGameInstaller : GameInstallerBase

@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "Hi3Helper.Plugin.Endfield.CN": {
+    "Hi3Helper.Plugin.Endfield": {
       "commandName": "Project",
       "nativeDebugging": true
     }

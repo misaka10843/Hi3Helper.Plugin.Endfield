@@ -1,5 +1,5 @@
 @echo off
-set _pluginName=Hi3Helper.Plugin.Endfield.CN
+set _pluginName=Hi3Helper.Plugin.Endfield
 set _isRemoveSymbol=true
 
 set currentPath=%~dp0
@@ -83,8 +83,8 @@ if /I exist "%projectPublishPath%" (
 )
 mkdir "%outputDirPath%"
 cd "%projectPath%"
-dotnet restore --runtime win-x64 ..\Hi3Helper.Plugin.Endfield.CN.sln || goto :Error
-dotnet clean --configuration %configuration% --runtime win-x64 ..\Hi3Helper.Plugin.Endfield.CN.sln || goto :Error
+dotnet restore --runtime win-x64 ..\Hi3Helper.Plugin.Endfield.sln || goto :Error
+dotnet clean --configuration %configuration% --runtime win-x64 ..\Hi3Helper.Plugin.Endfield.sln || goto :Error
 dotnet publish --configuration %configuration% --runtime win-x64 /p:PublishProfile=%publishProfile% -o "%outputDirPath%" || goto :Error
 
 :RemovePDBIfNotDebug

@@ -9,22 +9,22 @@ using System.Threading;
 using System.Threading.Tasks;
 using Hi3Helper.Plugin.Core;
 using Hi3Helper.Plugin.Core.Management;
-using Hi3Helper.Plugin.Endfield.CN.Management.Api;
-using Hi3Helper.Plugin.Endfield.CN.Utils;
+using Hi3Helper.Plugin.Endfield.Management.Api;
+using Hi3Helper.Plugin.Endfield.Utils;
 using Microsoft.Extensions.Logging;
 
-namespace Hi3Helper.Plugin.Endfield.CN.Management;
+namespace Hi3Helper.Plugin.Endfield.Management;
 
 [GeneratedComClass]
 internal partial class EndfieldGameManager : GameManagerBase
 {
     private readonly string _apiUrl;
-    private readonly string _webApiUrl;
     private readonly string _appCode;
-    private readonly string _launcherAppCode;
     private readonly string _channel;
-    private readonly string _subChannel;
+    private readonly string _launcherAppCode;
     private readonly string _seq;
+    private readonly string _subChannel;
+    private readonly string _webApiUrl;
 
     private EndfieldGetLatestGameRsp? _latestGameInfo;
 
@@ -127,7 +127,7 @@ internal partial class EndfieldGameManager : GameManagerBase
             Seq = _seq,
             ProxyReqs = new List<EndfieldProxyRequest>
             {
-                new EndfieldProxyRequest
+                new()
                 {
                     Kind = "get_latest_game",
                     GetLatestGameReq = new EndfieldGetLatestGameReq
@@ -177,7 +177,7 @@ internal partial class EndfieldGameManager : GameManagerBase
 
         return 0;
     }
-    
+
     protected override Task<int> InitAsync(CancellationToken token)
     {
         return InitAsyncInner(true, token);

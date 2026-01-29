@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace Hi3Helper.Plugin.Endfield.CN.Utils;
+namespace Hi3Helper.Plugin.Endfield.Utils;
 
 /// <summary>
 ///     将多个分卷文件模拟为一个连续的流，避免物理合并

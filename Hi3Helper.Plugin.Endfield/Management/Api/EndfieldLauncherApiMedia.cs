@@ -13,16 +13,16 @@ using Hi3Helper.Plugin.Core.Management.Api;
 using Hi3Helper.Plugin.Core.Utility;
 using Microsoft.Extensions.Logging;
 
-namespace Hi3Helper.Plugin.Endfield.CN.Management.Api;
+namespace Hi3Helper.Plugin.Endfield.Management.Api;
 
 [GeneratedComClass]
 public partial class EndfieldLauncherApiMedia : LauncherApiMediaBase
 {
-    private readonly string _webApiUrl;
     private readonly string _appCode;
     private readonly string _channel;
-    private readonly string _subChannel;
     private readonly string _seq;
+    private readonly string _subChannel;
+    private readonly string _webApiUrl;
 
     private EndfieldGetMainBgImageRsp? _bgResponse;
 

@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 using Hi3Helper.Plugin.Core;
 using Hi3Helper.Plugin.Core.Management;
 
-namespace Hi3Helper.Plugin.Endfield.CN;
+namespace Hi3Helper.Plugin.Endfield;
 
 public partial class Exports : SharedStaticV1Ext<Exports>
 {
