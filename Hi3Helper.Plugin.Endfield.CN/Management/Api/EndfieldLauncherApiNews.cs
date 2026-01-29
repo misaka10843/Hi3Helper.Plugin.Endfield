@@ -211,7 +211,8 @@ public partial class EndfieldLauncherApiNews : LauncherApiNewsBase
         {
             AppCode = _appCode,
             Channel = _channel,
-            SubChannel = _subChannel
+            SubChannel = _subChannel,
+            Language = SharedStatic.PluginLocaleCode?.ToLower() ?? "en-us"
         };
     }
 

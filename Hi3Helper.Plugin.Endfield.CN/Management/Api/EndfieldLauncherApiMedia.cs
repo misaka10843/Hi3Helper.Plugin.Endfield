@@ -85,7 +85,9 @@ public partial class EndfieldLauncherApiMedia : LauncherApiMediaBase
     public override void GetBackgroundEntries(out nint handle, out int count, out bool isDisposable,
         out bool isAllocated)
     {
-        var url = _bgResponse?.MainBgImage?.Url;
+        var url = !string.IsNullOrEmpty(_bgResponse?.MainBgImage?.VideoUrl)
+            ? _bgResponse?.MainBgImage?.VideoUrl
+            : _bgResponse?.MainBgImage?.Url;
 
         if (string.IsNullOrEmpty(url))
         {
@@ -154,7 +156,8 @@ public partial class EndfieldLauncherApiMedia : LauncherApiMediaBase
         {
             AppCode = _appCode,
             Channel = _channel,
-            SubChannel = _subChannel
+            SubChannel = _subChannel,
+            Language = SharedStatic.PluginLocaleCode?.ToLower() ?? "en-us"
         };
     }
 }

@@ -177,46 +177,7 @@ internal partial class EndfieldGameManager : GameManagerBase
 
         return 0;
     }
-
-    public async Task<string?> GetDynamicBackgroundImageUrl(CancellationToken token = default)
-    {
-        var requestBody = new EndfieldBatchRequest
-        {
-            Seq = _seq,
-            ProxyReqs = new List<EndfieldProxyRequest>
-            {
-                new EndfieldProxyRequest
-                {
-                    Kind = "get_main_bg_image",
-                    GetMainBgImageReq = new EndfieldCommonReq
-                    {
-                        AppCode = _appCode,
-                        Channel = _channel,
-                        SubChannel = _subChannel
-                    }
-                }
-            }
-        };
-
-        try
-        {
-            using var response = await ApiResponseHttpClient!.PostAsJsonAsync(_webApiUrl, requestBody,
-                EndfieldApiContext.Default.EndfieldBatchRequest, token);
-            response.EnsureSuccessStatusCode();
-
-            var responseBody =
-                await response.Content.ReadFromJsonAsync(EndfieldApiContext.Default.EndfieldBatchResponse, token);
-            var bgInfo = responseBody?.ProxyRsps?.FirstOrDefault(x => x.Kind == "get_main_bg_image")?.GetMainBgImageRsp
-                ?.MainBgImage;
-
-            return bgInfo?.Url;
-        }
-        catch
-        {
-            return null;
-        }
-    }
-
+    
     protected override Task<int> InitAsync(CancellationToken token)
     {
         return InitAsyncInner(true, token);
