@@ -18,6 +18,16 @@ The core functionality is currently ready for daily game management and launchin
 
 ---
 
+> [!WARNING]
+> **Important Notes & Limitations**
+>
+> Since there is no official plugin documentation for Collapse Launcher, this project is based on existing plugins, **and may have the following limitations**:
+>
+> 1. **Pre-download**: The official launcher has not yet enabled pre-download functionality, so the corresponding data structure is currently unknown.
+> 2. **Integrity Check**: Game integrity checks will not be implemented for now (as this would require reverse-engineering the official launcher).
+> 3. **Update Risk**: The game update function may have issues (currently untested).
+     >    **It is highly recommended to backup your game directory before updating to prevent potential data loss.**
+
 ## ✨ Features
 
 ### ✅ Currently Supported
@@ -30,7 +40,7 @@ The core functionality is currently ready for daily game management and launchin
 
 ### 🚧 Roadmap / To-Do
 - [ ] **Game Update**: To be tested and adapted once the official game version (1.0.0+) is released.
-- [ ] **Pre-download Support**: Waiting for the Collapse Launcher to implement the relevant interfaces.
+- [ ] **Pre-download Support**: Waiting for the official Launcher to implement the relevant interfaces.
 - [ ] **Integrity Check**: Collapse Launcher does not currently provide the relevant API endpoints; waiting for upstream updates.
 - [ ] **Multi-Channel Support**: Planned support for additional server channels (e.g., Bilibili Server).
 - [ ] **Social Media Panel**: Integration of official social media feeds. (Functionality is implemented, but temporarily disabled as icons cannot be retrieved via API).

@@ -42,7 +42,7 @@ internal partial class EndfieldGameInstaller
             _owner.GameManager.GetGamePath(out var installPath);
             if (string.IsNullOrEmpty(installPath)) throw new InvalidOperationException("Install path is missing.");
 
-            var downloadDir = Path.Combine(installPath, "Downloads");
+            var downloadDir = Path.Combine(installPath, "Diffs");
             Directory.CreateDirectory(downloadDir);
 
             var downloadTasks = new List<EndfieldPack>();
@@ -140,7 +140,7 @@ internal partial class EndfieldGameInstaller
                 progress.TotalBytesToDownload = totalBytes;
                 Report(InstallProgressState.Install);
             });
-            // try { Directory.Delete(downloadDir, true); } catch { } // 删除下载包
+            try { Directory.Delete(downloadDir, true); } catch { } // 删除下载包
             progressStateDelegate?.Invoke(InstallProgressState.Completed);
         }
 
