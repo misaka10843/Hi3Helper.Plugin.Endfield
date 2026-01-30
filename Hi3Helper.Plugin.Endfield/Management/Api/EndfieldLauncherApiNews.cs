@@ -28,6 +28,7 @@ public partial class EndfieldLauncherApiNews : LauncherApiNewsBase
 
     private EndfieldGetBannerRsp? _bannerResponse;
     private EndfieldGetAnnouncementRsp? _newsResponse;
+    private EndfieldGetSidebarRsp? _sidebarResponse;
 
     public EndfieldLauncherApiNews(string webApiUrl, string appCode, string channel, string subChannel, string seq)
     {
@@ -63,7 +64,8 @@ public partial class EndfieldLauncherApiNews : LauncherApiNewsBase
             ProxyReqs = new[]
             {
                 new EndfieldProxyRequest { Kind = "get_announcement", GetAnnouncementReq = CreateCommonReq() },
-                new EndfieldProxyRequest { Kind = "get_banner", GetBannerReq = CreateCommonReq() }
+                new EndfieldProxyRequest { Kind = "get_banner", GetBannerReq = CreateCommonReq() },
+                new EndfieldProxyRequest { Kind = "get_sidebar", GetSidebarReq = CreateCommonReq() }
             }.ToList()
         };
 
@@ -78,7 +80,7 @@ public partial class EndfieldLauncherApiNews : LauncherApiNewsBase
 
             _newsResponse = rspBody?.ProxyRsps?.FirstOrDefault(x => x.Kind == "get_announcement")?.GetAnnouncementRsp;
             _bannerResponse = rspBody?.ProxyRsps?.FirstOrDefault(x => x.Kind == "get_banner")?.GetBannerRsp;
-
+            _sidebarResponse = rspBody?.ProxyRsps?.FirstOrDefault(x => x.Kind == "get_sidebar")?.GetSidebarRsp;
             return 0;
         }
         catch (Exception ex)
@@ -196,7 +198,39 @@ public partial class EndfieldLauncherApiNews : LauncherApiNewsBase
     public override void GetSocialMediaEntries(out nint handle, out int count, out bool isDisposable,
         out bool isAllocated)
     {
-        InitializeEmpty(out handle, out count, out isDisposable, out isAllocated);
+        // currently, we are unable to obtain the icon link from the API. the hard-coded method has certain limitations and we have temporarily stopped adding.
+        if (true)
+        {
+            InitializeEmpty(out handle, out count, out isDisposable, out isAllocated);
+        }
+        else
+        {
+            var sidebars = _sidebarResponse?.Sidebars;
+            if (sidebars == null || sidebars.Count == 0)
+            {
+                InitializeEmpty(out handle, out count, out isDisposable, out isAllocated);
+                return;
+            }
+
+            count = sidebars.Count;
+            var memory = PluginDisposableMemory<LauncherSocialMediaEntry>.Alloc(count);
+            handle = memory.AsSafePointer();
+            isDisposable = true;
+            isAllocated = true;
+
+            for (int i = 0; i < count; i++)
+            {
+                var item = sidebars[i];
+                string iconUrl = item.Pic?.Url ?? "";
+                string description = item.Pic?.Description ?? "";
+                string jumpUrl = item.JumpUrl ?? "";
+
+                ref var entry = ref memory[i];
+                entry.WriteIcon(iconUrl);
+                entry.WriteClickUrl(jumpUrl);
+                entry.WriteDescription(description);
+            }
+        }
     }
 
     protected override async Task DownloadAssetAsyncInner(HttpClient? client, string fileUrl, Stream outputStream,

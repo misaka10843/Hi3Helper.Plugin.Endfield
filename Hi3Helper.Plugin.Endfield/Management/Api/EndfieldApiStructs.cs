@@ -21,7 +21,7 @@ public class EndfieldProxyRequest
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public EndfieldGetLatestGameReq? GetLatestGameReq { get; set; }
 
-    // 通用请求体用于 Banner, News, BgImage
+    // 通用请求体用于 Banner, News, BgImage, Sidebar
     [JsonPropertyName("get_banner_req")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public EndfieldCommonReq? GetBannerReq { get; set; }
@@ -33,6 +33,10 @@ public class EndfieldProxyRequest
     [JsonPropertyName("get_main_bg_image_req")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public EndfieldCommonReq? GetMainBgImageReq { get; set; }
+    
+    [JsonPropertyName("get_sidebar_req")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public EndfieldCommonReq? GetSidebarReq { get; set; }
 }
 
 public class EndfieldGetLatestGameReq
@@ -76,6 +80,9 @@ public class EndfieldProxyResponse
 
     [JsonPropertyName("get_main_bg_image_rsp")]
     public EndfieldGetMainBgImageRsp? GetMainBgImageRsp { get; set; }
+    
+    [JsonPropertyName("get_sidebar_rsp")]
+    public EndfieldGetSidebarRsp? GetSidebarRsp { get; set; }
 }
 
 // --- 版本信息 ---
@@ -140,4 +147,30 @@ public class EndfieldBgImageInfo
 {
     [JsonPropertyName("url")] public string? Url { get; set; }
     [JsonPropertyName("video_url")] public string? VideoUrl { get; set; }
+}
+
+// --- Sidebar ---
+public class EndfieldGetSidebarRsp
+{
+    [JsonPropertyName("sidebars")] public List<EndfieldSidebar>? Sidebars { get; set; }
+}
+
+public class EndfieldSidebar
+{
+    [JsonPropertyName("media")] public string? Media { get; set; }
+    [JsonPropertyName("pic")] public EndfieldSidebarPic? Pic { get; set; }
+    [JsonPropertyName("jump_url")] public string? JumpUrl { get; set; }
+    [JsonPropertyName("sidebar_labels")] public List<EndfieldSidebarLabel>? SidebarLabels { get; set; }
+}
+
+public class EndfieldSidebarPic
+{
+    [JsonPropertyName("url")] public string? Url { get; set; }
+    [JsonPropertyName("description")] public string? Description { get; set; }
+}
+
+public class EndfieldSidebarLabel
+{
+    [JsonPropertyName("content")] public string? Content { get; set; }
+    [JsonPropertyName("jump_url")] public string? JumpUrl { get; set; }
 }
