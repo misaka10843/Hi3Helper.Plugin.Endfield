@@ -15,7 +15,7 @@ namespace Hi3Helper.Plugin.Endfield.Management.PresetConfig;
 public partial class EndfieldCnPresetConfig : PluginPresetConfigBase
 {
     private const string ExEcutableName = "Endfield.exe";
-
+ 
     private const string ExApiUrl = "https://launcher.hypergryph.com/api/proxy/batch_proxy";
     private const string ExWebApiUrl = "https://launcher.hypergryph.com/api/proxy/web/batch_proxy";
     private const string ExAppCode = "6LL0KJuqHBVz33WK";
@@ -24,7 +24,7 @@ public partial class EndfieldCnPresetConfig : PluginPresetConfigBase
     private const string ExSubChannel = "1";
     private const string ExSeq = "5";
 
-    [field: AllowNull] [field: MaybeNull] public override string GameName => field ??= "明日方舟：终末地";
+    [field: AllowNull] [field: MaybeNull] public override string GameName => field ??= "Arknights: Endfield";
     [field: AllowNull] [field: MaybeNull] public override string GameExecutableName => field ??= ExEcutableName;
 
     public override string GameAppDataPath
@@ -48,7 +48,7 @@ public partial class EndfieldCnPresetConfig : PluginPresetConfigBase
     [field: MaybeNull]
     public override string ZoneDescription => field ??= "《明日方舟：终末地》是一款由鹰角网络出品的3D即时策略RPG。";
 
-    [field: AllowNull] [field: MaybeNull] public override string ZoneName => field ??= "国服";
+    [field: AllowNull] [field: MaybeNull] public override string ZoneName => field ??= "Mainland China";
     [field: AllowNull] [field: MaybeNull] public override string ZoneFullName => field ??= "明日方舟：终末地";
     [field: AllowNull] [field: MaybeNull] public override string ZoneLogoUrl => field ??= "";
     [field: AllowNull] [field: MaybeNull] public override string ZonePosterUrl => field ??= "";

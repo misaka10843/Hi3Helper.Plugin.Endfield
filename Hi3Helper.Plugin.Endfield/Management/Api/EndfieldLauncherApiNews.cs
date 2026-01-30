@@ -100,9 +100,12 @@ public partial class EndfieldLauncherApiNews : LauncherApiNewsBase
         foreach (var tab in _newsResponse.Tabs)
         {
             if (tab.Announcements == null) continue;
-            var tName = tab.TabName ?? "公告";
+            string tName = tab.TabName ?? "Info";
 
-            foreach (var item in tab.Announcements) flatList.Add(new FlatNewsItem { Item = item, TypeName = tName });
+            foreach (var item in tab.Announcements)
+            {
+                flatList.Add(new FlatNewsItem { Item = item, TypeName = tName });
+            }
         }
 
         if (flatList.Count == 0)
@@ -116,23 +119,37 @@ public partial class EndfieldLauncherApiNews : LauncherApiNewsBase
         handle = memory.AsSafePointer();
         isDisposable = true;
         isAllocated = true;
-
-        for (var i = 0; i < count; i++)
+        //Todo: i am unable to support all the languages. before the launcher allows custom tabs, this method can only be used temporarily for classification.
+        for (int i = 0; i < count; i++)
         {
             var flatItem = flatList[i];
             var item = flatItem.Item;
+            // 资讯/新闻/News/Other
+            LauncherNewsEntryType type = LauncherNewsEntryType.Info;
+            string typeNameLower = flatItem.TypeName?.ToLowerInvariant() ?? "";
 
-            var type = flatItem.TypeName switch
+            // 公告 / Notice
+            if (typeNameLower.Contains("公告") ||
+                typeNameLower.Contains("notice") ||
+                typeNameLower.Contains("announcement") ||
+                typeNameLower.Contains("お知らせ") ||
+                typeNameLower.Contains("공지"))
             {
-                "公告" => LauncherNewsEntryType.Notice,
-                "新闻" => LauncherNewsEntryType.Info,
-                "资讯" => LauncherNewsEntryType.Info,
-                "活动" => LauncherNewsEntryType.Event,
-                _ => LauncherNewsEntryType.Info
-            };
+                type = LauncherNewsEntryType.Notice;
+            }
+            // 活动 / Event
+            else if (typeNameLower.Contains("活动") ||
+                     typeNameLower.Contains("活動") ||
+                     typeNameLower.Contains("event") ||
+                     typeNameLower.Contains("イベント") ||
+                     typeNameLower.Contains("이벤트"))
+            {
+                type = LauncherNewsEntryType.Event;
+            }
 
-            var dateStr = DateTime.Now.ToString("yyyy-MM-dd");
-            if (!string.IsNullOrEmpty(item.StartTs) && long.TryParse(item.StartTs, out var ts))
+            string dateStr = DateTime.Now.ToString("yyyy-MM-dd");
+            if (!string.IsNullOrEmpty(item.StartTs) && long.TryParse(item.StartTs, out long ts))
+            {
                 try
                 {
                     dateStr = DateTimeOffset.FromUnixTimeMilliseconds(ts).ToLocalTime().ToString("yyyy-MM-dd");
@@ -140,9 +157,10 @@ public partial class EndfieldLauncherApiNews : LauncherApiNewsBase
                 catch
                 {
                 }
+            }
 
-            var content = item.Content ?? "";
-            var jumpUrl = item.JumpUrl ?? "";
+            string content = item.Content ?? "";
+            string jumpUrl = item.JumpUrl ?? "";
 
             ref var entry = ref memory[i];
             entry.Write(content, null, jumpUrl, dateStr, type);
