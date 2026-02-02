@@ -37,12 +37,12 @@ The core functionality is currently ready for daily game management and launchin
 - **Server Support**:
     - [x] CN Server
     - [x] Global Server
+    - [x] Bilibili Server
 
 ### 🚧 Roadmap / To-Do
-- [ ] **Game Update**: To be tested and adapted once the official game version (1.0.0+) is released.
+- [ ] **Game Update**: To be tested and adapted once the official game version (1.0.14+) is released.
 - [ ] **Pre-download Support**: Waiting for the official Launcher to implement the relevant interfaces.
 - [ ] **Integrity Check**: Collapse Launcher does not currently provide the relevant API endpoints; waiting for upstream updates.
-- [ ] **Multi-Channel Support**: Planned support for additional server channels (e.g., Bilibili Server).
 - [ ] **Social Media Panel**: Integration of official social media feeds. (Functionality is implemented, but temporarily disabled as icons cannot be retrieved via API).
 
 ---
