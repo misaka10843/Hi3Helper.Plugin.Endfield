@@ -61,7 +61,7 @@ public partial class EndfieldPlugin : PluginBase
 
     public override void GetPluginSelfUpdater(out IPluginSelfUpdate selfUpdate)
     {
-        selfUpdate = null!;
+        selfUpdate = new SelfUpdate();
     }
 
     public override void GetPluginAppIconUrl(out string result)

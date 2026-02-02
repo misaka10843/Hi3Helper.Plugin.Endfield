@@ -86,3 +86,45 @@ jobs:
           files: ./publish/*.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: Checkout target repo
+        uses: actions/checkout@v6
+        with:
+          repository: CollapseLauncher/CollapseLauncher-ReleaseRepo
+          path: ./target-repo
+          token: ${{ secrets.RELEASE_REPO_TOKEN }}
+          fetch-depth: 0
+
+      - name: Copy files to target repo
+        run: |
+          New-Item -ItemType Directory -Force -Path ./target-repo/Endfield/build
+          New-Item -ItemType Directory -Force -Path ./target-repo/Endfield/Lib
+          Copy-Item -Path ./publish/Endfield.dll -Destination ./target-repo/Endfield/
+          Copy-Item -Path ./publish/Endfield.pdb -Destination ./target-repo/Endfield/
+          Copy-Item -Path ./publish/manifest.json -Destination ./target-repo/Endfield/
+          Copy-Item -Path ./publish/SevenZipExtractor.pdb -Destination ./target-repo/Endfield/
+          Copy-Item -Path ./publish/Lib/7z.dll -Destination ./target-repo/Endfield/Lib/
+          Copy-Item -Path ./publish/*.zip -Destination ./target-repo/Endfield/build/
+
+      - name: Create Pull Request in Release Repo
+        uses: peter-evans/create-pull-request@v8
+        with:
+          token: ${{ secrets.RELEASE_REPO_TOKEN }}
+          path: ./target-repo
+          branch: endfield-plugin-release-${{ inputs.version }}
+          base: main
+          title: 'Release Endfield Plugin v${{ inputs.version }}'
+          body: |
+            Automated release of Endfield Plugin v${{ inputs.version }}
+            
+            ${{ steps.git-cliff.outputs.content }}
+            
+            Files updated:
+            - Endfield.dll
+            - Endfield.pdb
+            - manifest.json
+            - SevenZipExtractor.pdb
+            - Lib/7z.dll
+            - build/*.zip
+          commit-message: 'Release Endfield Plugin v${{ inputs.version }}'
+          delete-branch: false
