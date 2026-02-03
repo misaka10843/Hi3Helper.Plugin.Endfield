@@ -165,7 +165,7 @@ public partial class Exports
             : new ProcessStartInfo(startingExecutablePath, startArgument);
 
         startInfo.WorkingDirectory = Path.GetDirectoryName(startingExecutablePath);
-        startInfo.UseShellExecute = true;
+        startInfo.UseShellExecute = false;
 
         process = new Process
         {
