@@ -1,6 +1,8 @@
 ---
 name: Bug Report
 description: Create a report to help us fix the Wuthering Waves Plugin for Collapse!
+assignees: 
+  - misaka10843
 title: "[Bug]: "
 labels: ['Needs Triaging']
 body:
