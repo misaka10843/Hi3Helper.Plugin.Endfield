@@ -8,6 +8,8 @@
 
 **English** · [简体中文](./README.zh-CN.md)
 
+[Arknights](https://github.com/misaka10843/Hi3Helper.Plugin.Arknights) · **Arknights: Endfield**
+
 A third-party plugin for [Collapse Launcher](https://collapselauncher.com/), designed to support the downloading,
 updating, and launching of **Arknights: Endfield**.
 
@@ -28,15 +30,19 @@ The core functionality is currently ready for daily game management and launchin
 > [!WARNING]
 > **Important Notes & Limitations**
 >
-> Since there is no official plugin documentation for Collapse Launcher, this project is based on existing plugins, *
-*and may have the following limitations**:
+> Since there is no official plugin documentation for Collapse Launcher, this project is based on existing plugins, \*
+> \*and may have the following limitations\*\*:
 >
 > 1. **Pre-download**: The official launcher has not yet enabled pre-download functionality, so the corresponding data
+
      structure is currently unknown.
+
 > 2. **Integrity Check**: Game integrity checks will not be implemented for now (as this would require
+
      reverse-engineering the official launcher).
+
 > 3. **Update Risk**: The game update function may have issues (currently untested).
-     >    **It is highly recommended to backup your game directory before updating to prevent potential data loss.**
+>    **It is highly recommended to backup your game directory before updating to prevent potential data loss.**
 
 ## ✨ Features
 
@@ -46,18 +52,18 @@ The core functionality is currently ready for daily game management and launchin
 - **Media Integration**: Fetches official background images, banners, and the latest news/announcements.
 - **Game Management**: Supports full game download, installation, launching, and running process detection.
 - **Server Support**:
-    - [x] CN Server
-    - [x] Global Server
-    - [x] Bilibili Server
+  - [x] CN Server
+  - [x] Global Server
+  - [x] Bilibili Server
 
 ### 🚧 Roadmap / To-Do
 
 - [ ] **Game Update**: To be tested and adapted once the official game version (1.0.14+) is released.
 - [ ] **Pre-download Support**: Waiting for the official Launcher to implement the relevant interfaces.
 - [ ] **Integrity Check**: Collapse Launcher does not currently provide the relevant API endpoints; waiting for upstream
-  updates.
+      updates.
 - [ ] **Social Media Panel**: Integration of official social media feeds. (Functionality is implemented, but temporarily
-  disabled as icons cannot be retrieved via API).
+      disabled as icons cannot be retrieved via API).
 
 ---
 
@@ -91,4 +97,4 @@ Before using this plugin, please ensure your Collapse Launcher version is `1.83.
 
 ## ⚠️ Disclaimer
 
-This project is a third-party open-source plugin and is not affiliated with *GRYPHLINE* or *Hypergryph*.
+This project is a third-party open-source plugin and is not affiliated with _GRYPHLINE_ or _Hypergryph_.

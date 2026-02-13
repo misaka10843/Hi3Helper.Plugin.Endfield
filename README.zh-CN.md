@@ -8,6 +8,8 @@
 
 [English](./README.md) · **简体中文**
 
+[明日方舟](https://github.com/misaka10843/Hi3Helper.Plugin.Arknights) · **明日方舟：终末地**
+
 为 [Collapse Launcher (Collapse 启动器)](https://collapselauncher.com/) 开发的第三方插件，旨在支持 **《明日方舟：终末地》**
 的下载、更新与启动。
 
@@ -23,7 +25,6 @@
   <a href="https://github.com/misaka10843/Hi3Helper.Plugin.Endfield/stargazers" target="_blank"><img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/misaka10843/Hi3Helper.Plugin.Endfield?style=for-the-badge&label=%E2%AD%90STAR"></a>
 </p>
 
-
 ---
 
 > [!WARNING]
@@ -34,7 +35,7 @@
 > 1. **预下载功能**：当前官方启动器还并未开启预下载功能，暂时无法获知对应的数据结构，因此无法支持。
 > 2. **完整性校验**：暂不计划制作游戏完整性检查功能（这涉及逆向官方启动器逻辑）。
 > 3. **更新功能风险**：游戏更新功能可能存在问题（暂时无法测试）。
-     >    **强烈建议在更新时备份游戏目录，防止更新出错导致文件损坏。**
+>    **强烈建议在更新时备份游戏目录，防止更新出错导致文件损坏。**
 
 ## ✨ 功能特性
 
@@ -44,9 +45,9 @@
 - **资讯获取**：自动拉取并展示官方背景图、Banner 以及最新新闻公告。
 - **游戏管理**：支持完整的游戏下载、安装、启动及运行检测。
 - **多服支持**：
-    - [x] 国服 (CN)
-    - [x] 全球服 (Global)
-    - [x] Bilibili服 (Bili)
+  - [x] 国服 (CN)
+  - [x] 全球服 (Global)
+  - [x] Bilibili服 (Bili)
 
 ### 🚧 开发计划 / 待办事项 (ToDo)
 
@@ -86,4 +87,4 @@
 
 ## ⚠️ 免责声明
 
-本项目是第三方开源插件，与 *GRYPHLINE* 或 *Hypergryph* 无关。
+本项目是第三方开源插件，与 _GRYPHLINE_ 或 _Hypergryph_ 无关。
