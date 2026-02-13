@@ -3,6 +3,9 @@ name: Build and Publish Plugin
 on:
   push:
     branches: [main]
+    paths-ignore:
+      - '*.md'
+      - '.github/workflows/*.yaml'
   pull_request:
     branches: [main]
   workflow_dispatch:
