@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Hi3Helper.Hypergryph.Core.Management;
+using Hi3Helper.Plugin.Core.Management;
 using Hi3Helper.Plugin.Core.Management.PresetConfig;
 using Hi3Helper.Plugin.Core.Utility;
 using Microsoft.Extensions.Logging;
@@ -139,10 +139,10 @@ public partial class Exports
         gameExecutablePath = null;
         if (context is not
             {
-                GameManager: HgGameManager hgManager, PresetConfig: PluginPresetConfigBase presetConfig
+                GameManager: IGameManager gameManager, PresetConfig: PluginPresetConfigBase presetConfig
             }) return false;
 
-        hgManager.GetGamePath(out var gamePath);
+        gameManager.GetGamePath(out var gamePath);
         presetConfig.comGet_GameExecutableName(out var executablePath);
 
         gamePath?.NormalizePathInplace();

@@ -26,6 +26,7 @@
     <ItemGroup>
         <ProjectReference Include="..\Hi3Helper.Plugin.Core\Hi3Helper.Plugin.Core.csproj"/>
         <ProjectReference Include="..\Hi3Helper.Hypergryph.Core\Hi3Helper.Hypergryph.Core.csproj"/>
+        <ProjectReference Include="..\Hi3Helper.Hypergryph.Yostar\Hi3Helper.Hypergryph.Yostar.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
