@@ -39,6 +39,84 @@ internal sealed class YostarGameConfig
     public string? DecompressionSize { get; set; }
 }
 
+internal sealed class YostarBaseConfig
+{
+    [JsonPropertyName("launcher_background_img")]
+    public string? LauncherBackgroundImg { get; set; }
+}
+
+internal sealed class YostarOperationsResource
+{
+    [JsonPropertyName("operations_banner_list")]
+    public List<YostarBanner>? Banners { get; set; }
+
+    [JsonPropertyName("news_list")]
+    public YostarNewsList? NewsList { get; set; }
+}
+
+internal sealed class YostarBanner
+{
+    [JsonPropertyName("banner_img")]
+    public string? Image { get; set; }
+
+    [JsonPropertyName("jump_url")]
+    public string? JumpUrl { get; set; }
+}
+
+internal sealed class YostarNewsList
+{
+    [JsonPropertyName("code")]
+    public int Code { get; set; }
+
+    [JsonPropertyName("data")]
+    public YostarNewsData? Data { get; set; }
+}
+
+internal sealed class YostarNewsData
+{
+    [JsonPropertyName("news")]
+    public List<YostarNewsCategory>? News { get; set; }
+}
+
+internal sealed class YostarNewsCategory
+{
+    [JsonPropertyName("typeLabel")]
+    public string? TypeLabel { get; set; }
+
+    [JsonPropertyName("rows")]
+    public List<YostarNewsItem>? Rows { get; set; }
+}
+
+internal sealed class YostarNewsItem
+{
+    [JsonPropertyName("title")]
+    public string? Title { get; set; }
+
+    [JsonPropertyName("link")]
+    public string? Link { get; set; }
+
+    [JsonPropertyName("publishTime")]
+    public long? PublishTime { get; set; }
+}
+
+internal sealed class YostarSocialMediaResource
+{
+    [JsonPropertyName("social_media_resource_list")]
+    public List<YostarSocialMediaItem>? Items { get; set; }
+}
+
+internal sealed class YostarSocialMediaItem
+{
+    [JsonPropertyName("social_media_channel")]
+    public string? Channel { get; set; }
+
+    [JsonPropertyName("jump_url")]
+    public string? JumpUrl { get; set; }
+
+    [JsonPropertyName("qr_img")]
+    public string? QrImage { get; set; }
+}
+
 internal sealed class YostarManifestUrl
 {
     [JsonPropertyName("url")]

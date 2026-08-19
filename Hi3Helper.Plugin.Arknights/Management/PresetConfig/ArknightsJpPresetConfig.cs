@@ -49,8 +49,16 @@ public partial class ArknightsJpPresetConfig : PluginPresetConfigBase
     [field: AllowNull] [field: MaybeNull] public override string GameMainLanguage => field ??= "ja-JP";
     [field: AllowNull] [field: MaybeNull] public override string LauncherGameDirectoryName => field ??= "Arknights_JP";
     [field: AllowNull] [field: MaybeNull] public override List<string> SupportedLanguages => field ??= ["Japanese"];
-    public override ILauncherApiMedia? LauncherApiMedia { get; set; }
-    public override ILauncherApiNews? LauncherApiNews { get; set; }
+    public override ILauncherApiMedia? LauncherApiMedia
+    {
+        get => field ??= new Hi3Helper.Hypergryph.Yostar.Api.YostarLauncherApiMedia(LauncherOptions);
+        set;
+    }
+    public override ILauncherApiNews? LauncherApiNews
+    {
+        get => field ??= new Hi3Helper.Hypergryph.Yostar.Api.YostarLauncherApiNews(LauncherOptions);
+        set;
+    }
 
     public override IGameManager? GameManager
     {

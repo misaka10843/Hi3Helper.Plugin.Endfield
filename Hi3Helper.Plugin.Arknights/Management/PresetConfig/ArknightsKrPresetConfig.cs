@@ -13,12 +13,12 @@ using Hi3Helper.Plugin.Core.Management.PresetConfig;
 namespace Hi3Helper.Plugin.Arknights.Management.PresetConfig;
 
 [GeneratedComClass]
-public partial class ArknightsGlobalPresetConfig : PluginPresetConfigBase
+public partial class ArknightsKrPresetConfig : PluginPresetConfigBase
 {
     private static readonly YostarLauncherOptions LauncherOptions = new(
-        "Arknights_EN",
-        "https://api-launcher-en.yo-star.com",
-        "Arknights_EN",
+        "Arknights_KR",
+        "https://api-launcher-kr.yo-star.com",
+        "Arknights_KR",
         "Arknights.exe");
 
     [field: AllowNull] [field: MaybeNull] public override string GameName => field ??= "Arknights";
@@ -36,20 +36,19 @@ public partial class ArknightsGlobalPresetConfig : PluginPresetConfigBase
 
     [field: AllowNull] [field: MaybeNull] public override string GameLogFileName => field ??= null!;
     [field: AllowNull] [field: MaybeNull] public override string GameVendorName => field ??= "Yostar";
-    [field: AllowNull] [field: MaybeNull] public override string GameRegistryKeyName => field ??= "Arknights_EN";
-    [field: AllowNull] [field: MaybeNull] public override string ProfileName => field ??= "ArknightsGlobal";
+    [field: AllowNull] [field: MaybeNull] public override string GameRegistryKeyName => field ??= "Arknights_KR";
+    [field: AllowNull] [field: MaybeNull] public override string ProfileName => field ??= "ArknightsKr";
     [field: AllowNull] [field: MaybeNull] public override string ZoneDescription => field ??=
-        "The global release of Arknights, published by Yostar.";
-    [field: AllowNull] [field: MaybeNull] public override string ZoneName => field ??= "Global";
-    [field: AllowNull] [field: MaybeNull] public override string ZoneFullName => field ??= "Arknights (Global)";
+        "The Korean release of Arknights, published by Yostar.";
+    [field: AllowNull] [field: MaybeNull] public override string ZoneName => field ??= "Korea";
+    [field: AllowNull] [field: MaybeNull] public override string ZoneFullName => field ??= "Arknights (Korea)";
     [field: AllowNull] [field: MaybeNull] public override string ZoneLogoUrl => field ??= string.Empty;
     [field: AllowNull] [field: MaybeNull] public override string ZonePosterUrl => field ??= string.Empty;
-    [field: AllowNull] [field: MaybeNull] public override string ZoneHomePageUrl => field ??=
-        "https://www.arknights.global/";
+    [field: AllowNull] [field: MaybeNull] public override string ZoneHomePageUrl => field ??= "https://arknights.kr/";
     public override GameReleaseChannel ReleaseChannel => GameReleaseChannel.Public;
-    [field: AllowNull] [field: MaybeNull] public override string GameMainLanguage => field ??= "en-US";
-    [field: AllowNull] [field: MaybeNull] public override string LauncherGameDirectoryName => field ??= "Arknights_EN";
-    [field: AllowNull] [field: MaybeNull] public override List<string> SupportedLanguages => field ??= ["English"];
+    [field: AllowNull] [field: MaybeNull] public override string GameMainLanguage => field ??= "ko-KR";
+    [field: AllowNull] [field: MaybeNull] public override string LauncherGameDirectoryName => field ??= "Arknights_KR";
+    [field: AllowNull] [field: MaybeNull] public override List<string> SupportedLanguages => field ??= ["Korean"];
     public override ILauncherApiMedia? LauncherApiMedia
     {
         get => field ??= new Hi3Helper.Hypergryph.Yostar.Api.YostarLauncherApiMedia(LauncherOptions);

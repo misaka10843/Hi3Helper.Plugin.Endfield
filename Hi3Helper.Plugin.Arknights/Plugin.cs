@@ -18,7 +18,8 @@ public partial class ArknightsPlugin : PluginBase
         new ArknightsCnPresetConfig(),
         new ArknightsBiliPresetConfig(),
         new ArknightsGlobalPresetConfig(),
-        new ArknightsJpPresetConfig()
+        new ArknightsJpPresetConfig(),
+        new ArknightsKrPresetConfig()
     ];
 
     private static DateTime _pluginCreationDate = new(2026, 02, 13, 00, 00, 0, DateTimeKind.Utc);

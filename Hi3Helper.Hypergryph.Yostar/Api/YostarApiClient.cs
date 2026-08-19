@@ -30,6 +30,27 @@ internal sealed class YostarApiClient : IDisposable
 
     internal HttpClient DownloadHttpClient => _downloadHttpClient;
 
+    public async Task<YostarBaseConfig> GetBaseConfigAsync(CancellationToken token)
+    {
+        var response = await GetApiAsync("api/launcher/base/config",
+            YostarJsonContext.Default.YostarApiResponseYostarBaseConfig, token).ConfigureAwait(false);
+        return EnsureSuccessful(response, "base config");
+    }
+
+    public async Task<YostarOperationsResource> GetOperationsResourceAsync(CancellationToken token)
+    {
+        var response = await GetApiAsync("api/launcher/operations/resource",
+            YostarJsonContext.Default.YostarApiResponseYostarOperationsResource, token).ConfigureAwait(false);
+        return EnsureSuccessful(response, "operations resource");
+    }
+
+    public async Task<YostarSocialMediaResource> GetSocialMediaResourceAsync(CancellationToken token)
+    {
+        var response = await GetApiAsync("api/launcher/social/media/resource",
+            YostarJsonContext.Default.YostarApiResponseYostarSocialMediaResource, token).ConfigureAwait(false);
+        return EnsureSuccessful(response, "social media resource");
+    }
+
     public async Task<YostarGameConfig> GetGameConfigAsync(CancellationToken token)
     {
         var response = await GetApiAsync("api/launcher/game/config",
