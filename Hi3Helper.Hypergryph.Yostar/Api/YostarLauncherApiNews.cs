@@ -9,8 +9,10 @@ using System.Runtime.InteropServices.Marshalling;
 using System.Threading;
 using System.Threading.Tasks;
 using Hi3Helper.Plugin.Core;
+using Hi3Helper.Plugin.Core.Management;
 using Hi3Helper.Plugin.Core.Management.Api;
 using Hi3Helper.Plugin.Core.Utility;
+using Microsoft.Extensions.Logging;
 
 namespace Hi3Helper.Hypergryph.Yostar.Api;
 
